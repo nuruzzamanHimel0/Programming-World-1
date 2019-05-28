@@ -35,4 +35,5 @@
 
         ?>
 		
+		index.php page is here:
 <a href="?d_file=<?php echo $value['campaign_name']; ?>.txt" class="btn btn-primary" style="color:white; text-decoration: none;font-size:16px; border-radius: 5px;">Download</a>
