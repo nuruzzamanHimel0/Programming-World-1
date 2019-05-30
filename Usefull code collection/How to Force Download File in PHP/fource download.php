@@ -17,14 +17,13 @@
             {
                 //Default headers...........
               // Send file headers
-    header("Cache-Control: public");
+   header("Cache-Control: public");
      header("Content-Description: File Transfer");
      header("Content-Disposition: attachment;filename=$filename");
-    header("Content-type: application/zip");
+    header("Content-type: application/octet-stream");
+    header('Expires: 0');
    
     header("Content-Transfer-Encoding: binary"); 
-    // header('Pragma: no-cache'); 
-    // header('Expires: 0');
 
     readfile($filepath);
     exit();
