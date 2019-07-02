@@ -21,10 +21,11 @@ $(document).ready(function(){
 			}
 
 		});
+		return false;
 		
 	});
 
-// 	// TEXTBOX.............................................
+// 	// Ajax:- Autocomplete textbox.............................................
 
 	$('#skill').keyup(function(){
 		var skill = $(this).val();
@@ -42,6 +43,7 @@ $(document).ready(function(){
 				$('#userStatusSkil').html(reflection);
 			}
 		});
+			return false;
 
 		}
 		else{
@@ -94,12 +96,18 @@ $(document).ready(function(){
 					$("#body").val(" ");
 				}
 			});
+			return false;
 		}
 	});
+// reload automatically.................................
+
+// 	setTimeout(function(){
+//    window.location.reload(1);
+// }, 5000);
 
 	setInterval(function(){
-		$('#userStatusRefresh').load('check/getRefresh.php').fadeIn("slow");
-	});
+		$('#userStatusRefresh').load('check/getRefresh.php?id=4').fadeIn("slow");
+	},2000);
 
 
 

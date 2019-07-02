@@ -4,8 +4,8 @@
 	include_once ($filepath.'/../classes/Project.php');
 	$pro = new Project();
 
-	
-		$getRef = $pro->getRefresh();
+	$id = $_GET['id'];
+		$getRef = $pro->getRefresh($id);
 	
 
 ?>

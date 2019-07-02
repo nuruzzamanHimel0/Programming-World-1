@@ -50,6 +50,7 @@ class Project{
 		$result .="</ul> </div>";
 
 		echo $result;
+    exit();
 
 
 	}
@@ -60,7 +61,7 @@ class Project{
 		$insrt = $this->db->insert($query);
 	}
 
-	public function getRefresh()
+	public function getRefresh($id)
 	{
 		$query = "SELECT * FROM tbl_refresh ORDER BY id DESC LIMIT 5 ";
 		$getRef = $this->db->select($query);
@@ -71,7 +72,7 @@ class Project{
 		if($getRef != FALSE)
 		{
 			while ($value = $getRef->fetch_assoc()) {
-				$result .= "<li><a href='#'>".$value['body']."</a> </li>";
+				$result .= "<li>$id<a href='#'>".$value['body']."</a> </li>";
 			}
 		}else{
 			$result .= "<li> Result not Found </li>";
@@ -80,6 +81,7 @@ class Project{
 		$result .="</ul> </div>";
 
 		echo $result;
+    exit();
 	}
 
 	public function checkLiveSearch($search)
@@ -110,19 +112,20 @@ class Project{
 			}
 			$data .="</table>";
 			echo $data;
+			exit();
 
-			
 
 		}
 		else{
 			echo "Search not found";
+			exit();
 		}
 
 	}
 
 		public function autosavafunc($content,$contentId)
 	{
-		if($contentId != "")	
+		if($contentId != "")
 		{
 			$query = "UPDATE tbl_autosave
 					SET content = '$content'
@@ -155,6 +158,6 @@ class Project{
 
 	}
 
-	
+
 }
 ?>
