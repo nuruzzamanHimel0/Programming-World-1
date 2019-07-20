@@ -1,0 +1,170 @@
+<?php 
+$filepath = realpath(dirname(__FILE__));
+include_once ($filepath.'/../../AppConfig.php');
+include_once ($filepath.'/../../AllFuncion.php');
+
+class ChattingAppClass
+{
+	public $dbh;
+	public $db_host 		= DB_HOST ;
+public $db_port 		= DB_PORT;
+public $db_user 		= DB_USER;
+public $db_password 	=  DB_PASS;
+public $db_name 		= DB_NAME ;
+
+
+	
+	public function __construct()
+	{
+		try {
+    		$this->dbh = new PDO("mysql:host=$this->db_host;dbname=$this->db_name", $this->db_user, $this->db_password);
+		}
+		catch(PDOException $e)
+		{
+		    echo $e->getMessage();
+		}
+	}
+
+
+
+	// public function selectExistingChatFollowSomeConditon($state,$block_number) 
+	// {
+	// 	$sql = "SELECT sms_chatting.chatting_id as 'sms_chatting_name',sms_chatting_app.chatting_id,sms_chatting_app.campaign_id,sms_chatting_app.chatting_from,sms_chatting_app.chatting_to,sms_chatting_app.chatting_text,sms_chatting_app.chatting_state,sms_chatting_app.keep_alive_counter,sms_chatting_app.script_counter,sms_chatting_app.chatting_block,sms_chatting_app.chatting_datetime
+			
+	// 		FROM sms_chatting 
+	// 			INNER JOIN sms_chatting_app
+	// 			ON sms_chatting.id = sms_chatting_app.chatting_id AND sms_chatting_app.chatting_state = ? AND sms_chatting_app.chatting_block <= ?
+	// 			ORDER BY sms_chatting_app.id DESC LIMIT 1
+	// 	  ";
+	// 	  $stmt = $this->dbh->prepare($sql);
+	// 	  $execute = $stmt->execute(array($state,$block_number));
+	// 	  $fetch = $stmt->fetch();
+	// 	  if($execute)
+	// 	  {
+	// 	  	return $fetch;
+	// 	  }
+	// 	  else{
+	// 	  	return FALSE;
+	// 	  }
+
+	// }
+
+
+	public function selectExistingChatFollowSomeConditon($chatting_id,$state,$block_number)
+	{
+		$sql = "SELECT * FROM sms_chatting_app WHERE chatting_id = ? AND chatting_state = ? AND  chatting_block <= ? ORDER BY id DESC LIMIT 1 ";
+		$stmt = $this->dbh->prepare($sql);
+		  $execute = $stmt->execute(array($chatting_id,$state,$block_number));
+		  $fetch = $stmt->fetch();
+		  if($execute)
+		  {
+		  	return $fetch;
+		  }
+		  else{
+		  	return FALSE;
+		  }
+	}
+
+
+	public function keepAliveRandResponseMessageFromDB($campaign_id) 
+	{
+		$query = "SELECT * FROM sms_alive WHERE campaign_id = :campaign_id ORDER BY RAND() LIMIT 1";
+         $script_stmt = $this->dbh->prepare($query);
+         $execute = $script_stmt->execute(array(":campaign_id"=>$campaign_id));
+         $fetch = $script_stmt->fetch();
+         if($execute)
+         {
+         	return $fetch['alive_name'];
+         }
+         else{
+         	return FALSE;
+         }
+
+	}
+
+
+	public function keepAliveMesgSndAndDBInsertData($chatting_id,$campaign_id,$chatting_from,$chatting_to,$chatting_text,$keep_alive_counter,$script_counter,$chatting_block,$chatting_datetime) 
+	{
+
+		    $sql = "INSERT INTO sms_chatting_app(chatting_id,campaign_id,chatting_from,chatting_to,chatting_text,keep_alive_counter,script_counter,chatting_block,chatting_datetime) VALUES(?,?,?,?,?,?,?,?,?)";
+            $stmt = $this->dbh->prepare($sql);
+          	$execute = $stmt->execute(array($chatting_id,$campaign_id,$chatting_from,$chatting_to,$chatting_text,$keep_alive_counter,$script_counter,$chatting_block,$chatting_datetime));
+
+
+            if($execute)
+            {
+            	return "data if";
+            }
+            else{
+            	return "data else";
+            }
+
+	}
+
+
+	public function checkResponceMsgIdExistOrNot($messageId) 
+	{
+			$condQuery = "SELECT * FROM sms_chatting_app WHERE messageId = :messageId ";
+          $cond_stmt = $this->dbh->prepare($condQuery);
+          $cond_stmt->bindParam(":messageId",$messageId);
+          $execute = $cond_stmt->execute();
+
+          // messageId not find........................
+          if($cond_stmt->rowCount() <= '0')
+          {
+          	return $execute;
+          }
+          else{
+          	return FALSE;
+          }
+
+	}
+
+	public function lastRowOfChtAppWithFrmToNumber($from_num,$to_num) 
+	{
+		$sql = "SELECT * FROM sms_chatting_app WHERE chatting_from = :from_num AND chatting_to = :to_num ORDER BY id DESC LIMIT 1 " ;
+              $stmt =$this->dbh->prepare($sql);
+              $execute = $stmt->execute(array(":from_num"=> $from_num,":to_num"=>$to_num));
+              $fetch = $stmt->fetch();
+
+              if($stmt->rowCount() > 0)
+              {
+              	return $fetch;
+              }else{
+              	return FALSE;
+              }
+	}
+
+	public function udtMsgIdAndCsIntoChtApp($id,$messageId,$chatting_state) 
+	{
+		$sql = "UPDATE sms_chatting_app SET
+		 messageId = ?,
+		 chatting_state = ? 
+		 WHERE id = ? ";
+
+		$stmt =$this->dbh->prepare($sql);
+		$execute = $stmt->execute(array($messageId,$chatting_state,$id));
+
+		if($execute)
+		{
+			return $execute;
+		}
+		else{
+			return FALSE;
+		}
+
+	}
+
+
+	
+
+
+
+
+
+
+}
+
+
+
+?>

@@ -1,0 +1,253 @@
+<?php 
+
+function getExistingApplicationAllAPINumber($api_userid,$api_token,$api_secrete,$api_app_id)
+{
+	 $url = "https://api.catapult.inetwork.com/v1/users/".$api_userid."/phoneNumbers";
+                    //Your username.
+                        $username = $api_token;
+                         
+                        //Your password.
+                        $password = $api_secrete;
+                         
+                        //Initiate cURL.
+                        $ch = curl_init($url);
+                         
+                        //Specify the username and password using the CURLOPT_USERPWD option.
+                        curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);  
+                         
+                        //Tell cURL to return the output as a string instead
+                        //of dumping it to the browser.
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                         
+                        //Execute the cURL request.
+                        $response = curl_exec($ch);
+                        //Check for errors.
+                        if(curl_errno($ch)){
+                            //If an error occured, throw an Exception.
+                            throw new Exception(curl_error($ch));
+                        }
+
+                        $decode = json_decode($response, true);
+
+                        $api_number = array();
+
+//   
+                       foreach ($decode as $value ) 
+                       {
+                        if($value['numberState']== 'enabled' AND $value['applicationId']== $api_app_id )
+                          {
+                            array_push($api_number,$value['number']);
+                          }
+   
+                        }
+
+                        // $arrayToStr = implode(",",$api_number);
+                        return $api_number;
+}
+
+
+
+function smsReplyResponceManage($key_response)
+{
+    if(preg_match_all("/\\[(.*?)\\]/", $key_response, $matches))
+      {
+
+         preg_match_all("/\\[(.*?)\\]/", $key_response, $RESLT); 
+   
+    // COunt multi dimention array
+        $typeTotals = array_map("count", $RESLT);
+        $totalTickets = array_sum($typeTotals);
+
+        // echo "<br> Count:".$totalTickets."<br>";
+        $loop = $totalTickets/2;
+        // echo "Multi Dimention loop count: ".$loop."<br>";
+
+        for ($i=0; $i < $loop ; $i++) { 
+          // get multidimention array
+          $curly_bracket_value = $RESLT[1][$i];
+         
+          $underScoreReplace = str_replace(" ",'^',$curly_bracket_value);
+        
+          $key_response = str_replace($curly_bracket_value,$underScoreReplace,$key_response);
+          // echo $underScoreReplace."<br>";
+        }
+
+        // 5)Then String to arry convert using explode(' ',$responce) function
+        $strToarray = explode(' ',$key_response);
+        // echo "<pre>";
+        // print_r($strToarray);
+        // echo "<br>";
+
+        foreach ($strToarray as $key => $value) 
+        {
+          if(preg_match_all("/\\[(.*?)\\]/", $value, $matches))
+          {
+            // echo "Bracket exist <br>";
+            preg_match_all("/\\[(.*?)\\]/", $value, $matches);
+            // echo $strToarray1 = $matches[1][0];
+            // 6)Then create loop and if find [] then take value form [ braket] and explode("|",$array) and insert this arry in to same keyword
+            $strToarray1 = explode('|',$matches[1][0]);
+            $strToarray[$key] = $strToarray1;
+
+          }
+        }
+
+        
+        $final_send_reply = " ";
+
+        foreach ($strToarray as  $value) {
+            
+            if(is_array($value))
+            {
+              $rand = array_rand($value);
+              $word = str_replace("^"," ",$value[$rand]);
+              $final_send_reply .= $word." ";
+            }
+            else{
+              $final_send_reply .= $value." ";
+            }
+        }
+
+        return $final_send_reply;
+
+
+      }
+      else{
+        return $key_response;
+      }
+
+}
+
+function replaceCity_nameUsingAPIFuncton($final_send_reply,$userId,$username,$password,$api_id,$chatting_from)
+{
+      $url = "https://api.catapult.inetwork.com/v1/users/".$userId."/phoneNumbers";
+                   
+                        //Initiate cURL.
+                        $ch = curl_init($url);
+                         
+                        //Specify the username and password using the CURLOPT_USERPWD option.
+                        curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);  
+                         
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                         
+                        //Execute the cURL request.
+                        $response = curl_exec($ch);
+                        //Check for errors.
+                        if(curl_errno($ch))
+                        {
+                            throw new Exception(curl_error($ch));
+                        }
+
+                        $decode = json_decode($response, true);
+
+                        $api_number = array();
+                    
+                       foreach ($decode as $value ) 
+                       {
+                        if($value['numberState']== 'enabled' AND $value['applicationId']== $api_id AND $value['number'] == $chatting_from )
+                          {
+                           $city = $value['city'];
+                          }
+   
+                        }
+
+
+
+ $final_send_reply = str_replace("%city%",$city,$final_send_reply);
+ return $final_send_reply;
+
+}
+
+
+function sendSms_chatting_app($userId,$username,$password,$chatting_from,$chatting_to,$final_send_reply,$call_backURL="test-bandwidth-call-back.php")
+{
+    $postUrl = "https://api.catapult.inetwork.com/v1/users/".$userId."/messages";
+    $message = array(
+            "from" => $chatting_from,
+            "to" => $chatting_to,
+            "text" => $final_send_reply,
+            "receiptRequested"=> "all",
+            "callbackUrl"=>$call_backURL,
+            "callbackHttpMethod"=>"GET",
+            "callbackTimeout"=>"10000"
+          );
+    // $postData = array("messages" => array($message));
+
+    // encoding object
+    $postDataJson = json_encode($message);
+
+       $ch = curl_init();
+      $header = array("Content-Type:application/json", "Accept:application/json");
+
+      curl_setopt($ch, CURLOPT_URL, $postUrl);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+      curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+      curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);
+      curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+      curl_setopt($ch, CURLOPT_MAXREDIRS, 2);
+      curl_setopt($ch, CURLOPT_POST, 1);
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $postDataJson);
+
+      // response of the POST request
+      $response = curl_exec($ch);
+      $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+      $responseBody = json_decode($response);
+      curl_close($ch);
+}
+
+function saveImageFromURLWithCURL($userId,$basename_of_mms,$username,$password)
+{
+
+
+//  url get from Bandwidth Media download
+ $url = "https://api.catapult.inetwork.com/v1/users/".$userId."/media/".$basename_of_mms;
+ //image file directory.........
+$saveto = 'views/besma/assets/images/sms-chatting-app/'.$basename_of_mms;
+
+ // $createScriptFile = fopen("test-incoming_pic_responce-check.txt",'w');
+ //                        fwrite($createScriptFile,"url = ".$url);
+ //                        fwrite($createScriptFile,"saveto id = ".$saveto);
+
+ //                        fclose($createScriptFile);
+
+ $ch = curl_init ($url); // initiat CURL
+  curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password); // Set Username ANd Password
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+    $raw=curl_exec($ch);
+    curl_close ($ch);
+
+// if this file exist then delte this file from the directory
+    if(file_exists($saveto)){
+        unlink($saveto);
+    }
+
+    // Download And save image into the saveto directory................
+    $fp = fopen($saveto,'x');
+    fwrite($fp, $raw);
+    fclose($fp);
+
+
+    return $saveto;
+
+}
+
+
+function timeDifference($current_time,$chatting_datetime)
+{
+   $secondTime = strtotime($current_time);
+      $firstTime = strtotime($chatting_datetime);
+      // $lastSendSmsTime = $sltSentSms['chatting_datetime'];
+      $differenceInSeconds = $secondTime - $firstTime;
+      return $differenceInSeconds;
+}
+
+
+
+
+
+
+?>

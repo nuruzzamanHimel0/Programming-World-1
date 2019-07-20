@@ -1,0 +1,127 @@
+<?php 
+ini_set('display_errors','1');
+error_reporting(E_ALL);
+
+include("class/ChattingAppClass.php");
+
+$cc = new ChattingAppClass();
+
+ $db_host     = DB_HOST ;
+ $db_user     = DB_USER;
+ $db_password   =  DB_PASS;
+ $db_name     = DB_NAME ;
+ 
+ try {
+    $dbh = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
+}
+catch(PDOException $e)
+{
+    echo $e->getMessage();
+}
+  
+
+
+$response_receive = $_GET;
+
+$createFile = fopen("sms-get_responce.txt",'w');
+ 
+   foreach ($response_receive as $key => $value) 
+  {
+  fwrite($createFile,"Key[".$key."] =>"."Value[".$value."]"."\n");
+  }
+  fclose($createFile);
+
+
+
+
+    // $sms_chatting_existence = $cc->sms_chatting_exist_or_not();
+
+    $sql = "SELECT * FROM sms_chatting";
+        $stmt =$dbh->prepare($sql);
+        $execute = $stmt->execute();
+        // $fetch = $stmt->fetch();
+
+ // $sltSentSms = $cc->selectExistingChatFollowSomeConditon("sent",'0');
+
+      $createFile = fopen("sms-fetch-chatting.txt",'w');
+   
+        while($value = $stmt->fetch())
+        {
+            fwrite($createFile,$value['id']."\n");
+
+        }
+        fclose($createFile);
+
+
+         
+
+
+
+
+
+
+
+ 
+      //  foreach ($sms_chatting_existence as $id) 
+      //  {
+
+      //   $sltSentSms = $cc->selectExistingChatFollowSomeConditon($id,"sent",'0');
+
+      // $createFile = fopen($id."sms-chatting-app-fetch-notblock.txt",'w');
+
+      // fwrite($createFile,"messageId =".$sltSentSms['messageId']."\n");
+      // fwrite($createFile,"chatting_id =".$sltSentSms['chatting_id']."\n");
+      // fwrite($createFile,"chatting_datetime =".$sltSentSms['chatting_datetime']);
+
+
+      //  fclose($createFile);
+                
+         
+      //  }
+        
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+?>
+
