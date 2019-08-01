@@ -1,0 +1,21 @@
+url:https://www.youtube.com/watch?v=S4a4DsjHMqo
+$query = "show tables";
+	$stmt = $this->dbh->prepare($query);
+	$stmt->execute();
+
+	$i=0;
+	$tableFound = 0;
+	$datas ="";
+
+	while ($data = $stmt->fetch()) 
+	{
+		if($data['Tables_in_invention_main'] == "tmp_sms_chatting")
+		{
+			$tableFound = 1;
+		}
+		$i++;
+
+		
+	}
+
+	echo $tableFound;
