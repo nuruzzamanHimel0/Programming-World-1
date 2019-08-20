@@ -1,0 +1,24 @@
+window.flag = [];
+
+function hi()
+{
+    $.ajax({
+        url: "/shop/haveItem",
+        type: "GET",
+        async:false,
+        success: function(data){
+            if(data == '1')
+                flag = true;
+        }
+    });
+
+    if (flag) {
+        return false; 
+    }
+
+
+//some executable code when data is not '1'
+...
+}
+
+var output = hi();

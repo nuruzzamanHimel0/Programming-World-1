@@ -1,0 +1,76 @@
+window.imgFormate = [];
+// ............................ outgoing image upload..............................
+
+function OutgoingPictureUpload(pic_id,filename,camp_id,endingComand)
+{
+
+
+var form_data = new FormData();
+
+if(endingComand === "NOT_FINISH")
+{
+	var ins = document.getElementById(pic_id).files;
+	for(var i=0; i < ins.length; i++)
+	{
+		form_data.append(filename,document.getElementById(pic_id).files[i]);
+	}
+
+
+	form_data.append('camp_Id',camp_id);
+	form_data.append('pic_ID',pic_id);
+	form_data.append('FileName',filename);
+	form_data.append('EndingComand',endingComand);
+}
+else{
+	form_data.append('FileName',"no_file here");
+	form_data.append('EndingComand',endingComand);
+}
+
+
+	$.ajax({
+		url:"checkAjax/outgoing_image_upload.php",
+		method:"post",
+		data:form_data,
+		dataType:'text',
+		async: false,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success:function(reflection)
+		{
+			// console.log(reflection);
+			if(reflection != 'FINISH' && reflection != 'Extension_not_exist')
+			{
+			console.log(reflection);
+			imgFormate = false;
+
+			}
+			else if(reflection == 'Extension_not_exist')
+			{
+				imgFormate = true;
+			}
+			else if(reflection == "FINISH")
+			{
+				console.log(reflection);
+				setInterval(function(){
+				location.reload();	
+			},4000);
+				// location.reload();
+			}
+
+
+		}
+
+	});
+
+	 if (imgFormate == true) {
+       return false; 
+      // console.log(imgFormate);
+        
+    }
+    else{
+    	return true;
+    }
+
+	// return imgFormate;
+}
