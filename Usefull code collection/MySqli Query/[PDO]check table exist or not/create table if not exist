@@ -1,0 +1,6 @@
+       $tmp_query = "CREATE TABLE IF NOT EXISTS ".$db_name.".tmp_sms_chatting(
+              id INT PRIMARY KEY,
+              chatting_id VARCHAR(200) NOT NULL
+              )";
+              $tmp_creat_stmt = $dbh->query($tmp_query);
+              $tmp_creat_stmt->execute();
