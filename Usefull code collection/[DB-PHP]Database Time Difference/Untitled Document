@@ -1,0 +1,10 @@
+<?php 
+
+function timeDifference($current_time,$chatting_datetime)
+{
+   $secondTime = strtotime($current_time);
+      $firstTime = strtotime($chatting_datetime);
+      // $lastSendSmsTime = $sltSentSms['chatting_datetime'];
+      $differenceInSeconds = $secondTime - $firstTime;
+      return $differenceInSeconds;
+}
