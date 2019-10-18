@@ -1,0 +1,23 @@
+.footer-icon ul {
+  margin: 0px;
+  padding: 0px; }
+  .footer-icon ul li {
+    list-style: none;
+    display: inline-block;
+    float: left;
+    margin-right: 15px; }
+    .footer-icon ul li a.like {
+      font-size: 20px;
+      color: #000; }
+    .footer-icon ul li a.dislike {
+      font-size: 20px;
+      color: #9d4b4b; }
+    .footer-icon ul li a.empty {
+      font-size: 20px;
+      color: #9b9b29; }
+    .footer-icon ul li a .fa {
+      margin-right: 10px; }
+    .footer-icon ul li a:hover {
+      color: #000 !important; }
+
+/*# sourceMappingURL=style.css.map */

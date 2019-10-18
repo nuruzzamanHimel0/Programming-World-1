@@ -1,0 +1,44 @@
+.form-group{
+
+	.input-group{
+
+		.input-group-append{
+
+			button{
+				
+				border:0;
+			}
+		}
+	}
+
+	.result-wrapper{
+		    border: 1px solid #ddd;
+    position: absolute;
+    top: 42px;
+    width: 520px;
+    border-radius: 5px;
+    padding: 13px 0px 8px 0px; 
+
+	    ul{
+	    	margin: 0px;
+		    padding: 0px;
+		    list-style: none;
+			li{
+				display: block;
+    			padding: 4px 0px 4px 18px;
+
+    			a{
+    				color: #000;
+    				text-decoration: none;
+    				font-size: 20px;
+    			}
+    			a:hover{
+    				font-weight: bold;
+    			}
+			}
+	    }
+	}
+}
+.form-wrappaing{
+	position: relative;
+}
