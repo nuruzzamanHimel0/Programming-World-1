@@ -1,0 +1,78 @@
+/*===== Hero Area CSS =====*/
+section.hero_area, section.hero_area div{
+    height: 100%;
+}
+section.hero_area{
+    padding: 0;
+    width: 100%;
+    background-image: url(../images/hero_bg.jpg);
+    background-repeat: no-repeat;
+    position: relative;
+    z-index: 1;
+}
+
+section.hero_area:after{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-color: #000;
+    z-index: -1;
+    opacity: .6;
+}
+section.hero_area h2.top_title{
+    color: #fff;
+    border-color: #fff;
+}
+.hero_content{
+    width: 100%;
+    height: 530px;
+    text-align: center;
+    display: table;
+}
+.hero_content_details{
+    width: 100%;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    color: #fff;
+}
+.hero_content_details h2{ font-size: 40px; margin-bottom: 10px; }
+.hero_content_details p{ font-size: 25px; }
+
+
+/*===== Hero Area Form CSS =====*/
+.hero_content_details input[type="search"]{
+    width: 50%;
+    padding: 10px;
+    color: #000;
+    border: 1px solid #fff;
+    font-size: 18px;
+}
+.hero_content_details input[type="submit"] {
+    padding: 10px 20px;
+    color: #fff;
+    margin-left: -3px;
+    //font-weight: 900;
+    border: 1px solid transparent;
+    background-color: #c13605;
+    transition: .5s;
+    font-size: 18px;
+}
+.hero_content_details input[type="submit"]:hover{ color: #000; background-color: #ff4200; }
+.hero_content_details input#search { background-color: #ff4200; color: #000; transition: .5s; }
+.hero_content_details input#search:hover { background-color: #c13605; color: #fff; }
+.hero_content_details a.btn-success{
+    display: inline-block;
+    margin: 0 5px;
+    margin-top: 30px;
+    font-size: 14px;
+    background-color: #E95420;
+    border: 1px solid #E95420;
+    transition: .5s;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+}
+.hero_content_details a.btn-success:hover{ background-color: #FF4200}

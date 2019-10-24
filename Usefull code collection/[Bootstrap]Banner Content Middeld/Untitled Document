@@ -1,0 +1,22 @@
+  <!-- ====== Hero Area ====== -->
+    <section class="hero_area bg_style">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="hero_content">
+                       <div class="hero_content_details">
+                            <h2>Begin the search for your perfect domain name...</h2>
+                            <p>We have special discount on some TLD's</p>
+                            <!-- ====== Domain Search Form ====== -->
+                            <form action="index.html" >
+                                <input type="search" name="search" placeholder="eg.example.com">
+                                <input type="submit" name="search_btn" id="search" value="Search">
+                                <input type="submit" name="transfer_btn" value="Transfer">
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
