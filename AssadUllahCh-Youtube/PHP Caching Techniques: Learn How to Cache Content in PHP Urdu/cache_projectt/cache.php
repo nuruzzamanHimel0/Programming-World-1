@@ -4,16 +4,28 @@
 
      use WHMCS\Database\Capsule;
 
+
      $start = microtime(true);
      $cache_dir = "cache/file.cache.php";
      $data = "";
 
+
+    if(isset($_GET['action']) AND $_GET['action'] == 'delete')
+    {
+    	unlink($cache_dir);
+    	header("Location: cache.php");
+    	exit();
+    }
+
      if(file_exists($cache_dir))
      {
-     	echo "File Exist"."<br>";
+     	echo "File Cachedddddd"."<br>";
      	include($cache_dir);
+     ?>
+     	<a href="?action=delete" style="background: #ddd;padding: 14px;text-decoration: none;font-size: 20px;position: absolute;top: 3px;right: 6px;border-radius: 6px;">DELETE</a>
+     <?php	
      }else{
-     	echo "File not exist"."<br>"; 
+     	echo "File not Cachedddddd"."<br>"; 
 
      	// $user_count = Capsule::table('tblclients')->select('firstname','lastname')->count(); 
      	// echo $user_count;
