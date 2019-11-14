@@ -1,0 +1,15 @@
+https://www.php.net/manual/en/datetime.diff.php 
+
+https://stackoverflow.com/questions/40905174/calculate-the-difference-between-2-timestamps-in-php/40905413
+
+ex 1: 
+$datetime1 = new DateTime('2016-11-30 03:55:06');//start time
+$datetime2 = new DateTime('2016-11-30 11:55:06');//end time
+$interval = $datetime1->diff($datetime2);
+echo $interval->format('%Y years %m months %d days %H hours %i minutes %s seconds');
+%Y - use for difference in year
+%m - use for difference in months
+%d - use for difference in days
+%H - use for difference in hours
+%i - use for difference in minutes
+%s - use for difference in seconds
