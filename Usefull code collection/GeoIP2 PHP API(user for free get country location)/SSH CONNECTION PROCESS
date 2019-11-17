@@ -1,0 +1,16 @@
+1) FIRST SEARCH as SSH AND GO SSH ACCESS 
+2) NEW key generate
+3) pbulic key auth
+4) download private key
+5) save private key file into .ssh folder that say in home
+
+Open CMD(CTRL+ALT+T)
+->pwd
+->cd .ssh
+->ls
+get permission
+->chmod 700 id_rsa
+Access server
+username@hostname
+->ssh betamylighth@beta.mylighthost.com -p 1713
+access done
