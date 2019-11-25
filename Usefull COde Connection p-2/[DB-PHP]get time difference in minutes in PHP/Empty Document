@@ -35,3 +35,15 @@ echo $minutes.' minutes';
 This will output:
 
 2645654 minutes
+
+//.................. TIME DIFF ................
+
+function timeDifference($current_time,$chatting_datetime_from_db)
+{
+   $secondTime = strtotime($current_time);
+      $firstTime = strtotime($chatting_datetime_from_db);
+      // $lastSendSmsTime = $sltSentSms['chatting_datetime'];
+      $differenceInSeconds = $secondTime - $firstTime;
+      return $differenceInSeconds;
+}
+
