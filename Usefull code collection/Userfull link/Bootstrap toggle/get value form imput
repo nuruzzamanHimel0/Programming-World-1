@@ -1,0 +1,8 @@
+  <input type="checkbox" checked data-toggle="toggle" data-size="large" data-onstyle="success" data-offstyle="danger" id="url_shortner">
+$("#url_shortner").change(function(){
+    if($(this).prop("checked") == true){
+       //run code
+    }else{
+       //run code
+    }
+});
