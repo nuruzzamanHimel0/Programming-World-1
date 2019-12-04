@@ -1,0 +1,16 @@
+
+link : https://api.jquery.com/is/
+<ul>
+  <li>list <strong>item 1</strong></li>
+  <li><span>list item 2</span></li>
+  <li>list item 3</li>
+</ul>
+
+
+
+$( "ul" ).click(function( event ) {
+  var target = $( event.target );
+  if ( target.is( "li" ) ) {
+    target.css( "background-color", "red" );
+  }
+});
