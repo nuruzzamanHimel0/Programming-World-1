@@ -1,4 +1,55 @@
 <?php 
+	multidimention array print EXAMPLE.................................
+	
+	  $sentc_voice_array = array(
+
+            $Lan['English US'] => array(
+                $Lan['Kate']."_key" => $Lan['Kate'],
+                $Lan['Susan']."_key" => $Lan['Susan'],
+                $Lan['Julie']."_key" => $Lan['Julie'],
+                $Lan['Dave']."_key" => $Lan['Dave'],
+                $Lan['Paul']."_key" => $Lan['Paul']
+            ),
+             "namee arraere" => array(
+                $Lan['Kate']."_key" => $Lan['Kate'],
+                $Lan['Susan']."_key" => $Lan['Susan'],
+                $Lan['Julie']."_key" => $Lan['Julie'],
+                $Lan['Dave']."_key" => $Lan['Dave'],
+                $Lan['Paul']."_key" => $Lan['Paul']
+            )
+        );
+
+        echo "<pre>";
+        print_r($sentc_voice_array);
+
+        foreach ($sentc_voice_array as $key => $value) {
+            echo $key." ------ ".$value."<br>";
+
+            foreach ($value as $key => $value) {
+                echo $key." ------ ".$value."<br>";
+            }
+        }
+
+
+        exit();
+		
+		OUTPUT:
+		
+		English US ------ Array
+Kate_key ------ Kate
+Susan_key ------ Susan
+Julie_key ------ Julie
+Dave_key ------ Dave
+Paul_key ------ Paul
+namee arraere ------ Array
+Kate_key ------ Kate
+Susan_key ------ Susan
+Julie_key ------ Julie
+Dave_key ------ Dave
+Paul_key ------ Paul
+?>
+
+<?php 
 	echo "<h1> How to Multi Dimention associative array print.......... </h1><br>";
 	$marks = array( 
             "mohammad" => array (
