@@ -1,0 +1,31 @@
+html: 
+
+<select class="selectpicker" multiple  id="unassign_numbers_<?php echo $result['client_margeId']; ?>">
+                                                          <?php 
+
+                                                              $numberInaArray = explode(",",$result['account_numbers'] );
+                                                              
+                                                              if($numberInaArray[0] != 0)
+                                                              {
+                                                                foreach ($numberInaArray as $value) 
+                                                                {
+                                                          ?>
+                                                               
+                                                                   <option value="<?php echo $value; ?>">  <?php echo $value; ?>
+                                                                </option>
+                                                          <?php      
+                                                                } 
+                                                              }else{
+                                                              ?>
+
+                                                                  <option disabled>No Number</option>
+                                                              <?php
+
+                                                              }
+                                                          ?>
+                                                          
+                                                        </select>
+
+getvalue in js:
+var unassign_numbers = $('#unassign_numbers_'+margeId).val();
+	unassign_numbers = unassign_numbers.toString();
