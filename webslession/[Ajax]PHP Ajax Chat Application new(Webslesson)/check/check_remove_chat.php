@@ -6,12 +6,12 @@
 
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
-		$login_details_id =  $_SESSION['login_details_id'] ;
-		$is_type =  $_POST['is_type'];
+		// $login_details_id =  $_SESSION['login_details_id'] ;
+		$chat_message_id =  $_POST['chat_message_id'];
 		
-		$fetch_chat_history = $pro->update_is_type_status($login_details_id,$is_type);
+		$fetch_chat_history = $pro->remove_chat_method($chat_message_id);
 		
-		// echo $login_details_id." -- ".$is_type;
+		// echo $chat_message_id;
 		
 	}
 

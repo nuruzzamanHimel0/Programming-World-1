@@ -1,10 +1,9 @@
-<?php 
-	$filePath = realpath(dirname(__FILE__));
-	// echo $filePath;
-	include($filePath."/../config/config.php");
+<?php
+    $filepath = realpath(dirname(__FILE__));
+    // echo "DB :".$filepath;
 
+	include_once ($filepath.'/../config/config.php');
 class Database{
-
 	public $host   = DB_HOST;
 	public $user   = DB_USER;
 	public $pass   = DB_PASS;
@@ -12,48 +11,40 @@ class Database{
 	
 	public $link;
 	public $error;
-
-	public function __construct()
-	{
+	
+	public function __construct(){
 		$this->connectDB();
 	}
-
-	private function connectDB()
-	{
-	   $this->link = new mysqli($this->host,$this->user,$this->pass,$this->dbname);
-	   if(!$this->link)
-	   {
-		$this->error ="Connection fail".$this->link->connect_error;
-		
+	
+	private function connectDB(){
+	$this->link = new mysqli($this->host, $this->user, $this->pass, $this->dbname);
+	if(!$this->link){
+		$this->error = "Connection fail".$this->link->connect_error;
 		return false;
-		}
 	}
-
-	public function select($query)
-	{
+ }
+	
+	// Select or Read data
+	public function select($query){
 		$result = $this->link->query($query) or die($this->link->error.__LINE__);
-		if($result->num_rows > 0)
-		{
+		if($result->num_rows > 0){
 			return $result;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
-
-	public function insert($query)
-	{
-		$insert_row = $this->link->query($query) or die($this->link->error.__LINE__);
-		if($insert_row)
-		{
-			return $insert_row;
-		}
-		else{
-			return false;
-		}
+	
+	// Insert data
+	public function insert($query){
+	$insert_row = $this->link->query($query) or die($this->link->error.__LINE__);
+	if($insert_row){
+		return $insert_row;
+	} else {
+		return false;
 	}
-
-	   // Update data
+  }
+  
+    // Update data
   	public function update($query){
 	$update_row = $this->link->query($query) or die($this->link->error.__LINE__);
 	if($update_row){
@@ -73,13 +64,6 @@ class Database{
 	}
   }
 
-
-
-
-
-
-
+ 
+ 
 }
-
-
-?>
