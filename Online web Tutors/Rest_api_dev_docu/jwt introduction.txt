@@ -1,0 +1,38 @@
+** What is the JSON Web Token structure?
+Header
+Payload
+Signature
+
+Therefore, a JWT typically looks like the following.
+
+xxxxx.yyyyy.zzzzz
+
+** Header: 
+a = Base64Url(
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+)
+
+** Payload
+
+b= Base64Url ({
+  "sub": "1234567890",
+  "name": "John Doe",
+  "admin": true
+})
+
+
+** Signature
+
+To create the signature part you have to take the encoded header, the encoded payload, a secret, the algorithm specified in the header, and sign that.
+
+For example if you want to use the HMAC SHA256 algorithm, the signature will be created in the following way:
+
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  secret)
+
+ex: HMACSHA256(a+"."+b,secret)
