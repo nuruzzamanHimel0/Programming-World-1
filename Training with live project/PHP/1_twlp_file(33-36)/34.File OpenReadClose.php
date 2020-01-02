@@ -52,6 +52,30 @@
                 {
                     echo fgets($ourfile,filesize('text.txt'))."<br>";
                 }
+				
+				// or this can be work perfectly i never try for CSV file value get
+				
+			while ($row = fgetcsv($file_data)) 
+			{
+				 $data = array(
+				   'first_name' => $row[0],
+				   'last_name' => $row[1]
+				  );
+
+				 $query = "INSERT INTO csv_table(firstname,lastname) VALUES('".$data['first_name']."','".$data['last_name']."')";
+				$result = $this->db->insert($query);
+
+				if($result != FALSE)
+				{
+					sleep(1);
+
+					  if(ob_get_level() > 0)
+					  {
+					   ob_end_flush();
+					  }
+				}
+				
+			}
 
 
 
