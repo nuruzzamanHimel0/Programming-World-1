@@ -1,3 +1,4 @@
+// WHMCS URL: https://developers.whmcs.com/advanced/db-interaction/
 <?php 
     include('manager/init.php');  // WHMCS Encripted File
     include('lib/functions.php');
