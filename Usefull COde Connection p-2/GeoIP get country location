@@ -1,0 +1,5 @@
+require 'vendor/autoload.php';
+use GeoIp2\Database\Reader;
+$reader = new Reader('vendor/GeoLite2-Country/GeoLite2-Country.mmdb');
+$record = $reader->country(getUserIP());
+$country = $record->country->isoCode;
