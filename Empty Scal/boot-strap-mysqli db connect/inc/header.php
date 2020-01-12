@@ -4,8 +4,8 @@
  include_once ($filepath.'/../lib/Session.php');
 	include_once ($filepath.'/../lib/Database.php');
 	include_once ($filepath.'/../classes/Project.php');
-	// $db  = new Database();
-	// $pro = new Project();
+	$db  = new Database();
+	$pro = new Project();
 ?>
 <!doctype html>
 <html>
