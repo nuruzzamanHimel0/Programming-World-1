@@ -17,6 +17,9 @@
 	 <link rel="stylesheet" href="css/font-awesome.min.css">
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/navbar-fixed.css">
+  <!-- <link rel="stylesheet" href="css/jquery-ui.css"> --> 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="css/bootstrap-tokenfield.min.css">
   <link rel="stylesheet" href="css/main.css">
 
 </head>
