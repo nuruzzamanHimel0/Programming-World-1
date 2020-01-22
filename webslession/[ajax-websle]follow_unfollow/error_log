@@ -1,0 +1,12 @@
+[21-Jan-2020 09:30:13 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invention/public_html/test.inventionbots.com/lib/Database.php:30
+Stack trace:
+#0 /home/invention/public_html/test.inventionbots.com/inc/header.php(13): Database::prepare('SELECT * FROM c...')
+#1 /home/invention/public_html/test.inventionbots.com/index.php(1): include('/home/invention...')
+#2 {main}
+  thrown in /home/invention/public_html/test.inventionbots.com/lib/Database.php on line 30
+[21-Jan-2020 09:31:26 UTC] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/invention/public_html/test.inventionbots.com/lib/Database.php:30
+Stack trace:
+#0 /home/invention/public_html/test.inventionbots.com/inc/header.php(13): Database::prepare('SELECT * FROM c...')
+#1 /home/invention/public_html/test.inventionbots.com/index.php(1): include('/home/invention...')
+#2 {main}
+  thrown in /home/invention/public_html/test.inventionbots.com/lib/Database.php on line 30
