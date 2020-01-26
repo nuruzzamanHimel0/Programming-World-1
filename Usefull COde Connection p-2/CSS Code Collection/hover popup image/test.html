@@ -1,4 +1,159 @@
-       .hvr-pop {
+<?php
+function mlhSSL_config() {
+$configarray = array("FriendlyName" => array("Type" => "System", "Value"=>"MyLightHost SSL POPUP"),
+"store_id" => array("FriendlyName" => "Store ID", "Type" => "text", "Size" => "1000", ),
+"store_password" => array("FriendlyName" => "Store Password", "Type" => "text", "Size" => "100", ),
+"testmode" => array("FriendlyName" => "Test Mode", "Type" => "yesno", "Description" => "Tick this to test", ),
+"chargemode" => array("FriendlyName" => "Gateway Charge to Customer", "Type" => "yesno", "Description" => "Customer will bear gateway charge", ),
+);
+    return $configarray;
+}
+
+
+function mlhSSL_link($params) {
+    # Gateway Specific Variables
+    $gatewaystore_id = trim($params['store_id']);
+    $gatewaystore_password = trim($params['store_password']);
+    $gatewaytestmode = $params['testmode'];
+    $gatewaychargemode = $params['chargemode'];
+    # Invoice Variables
+    $invoiceid = $params['invoiceid'];
+    $description = $params["description"];
+$amount = $params['amount']; # Format: ##.##
+$currency = $params['currency']; # Currency Code
+    # Client Variables
+    $firstname = $params['clientdetails']['firstname'];
+    $lastname = $params['clientdetails']['lastname'];
+    $email = $params['clientdetails']['email'];
+    $address1 = $params['clientdetails']['address1'];
+    $address2 = $params['clientdetails']['address2'];
+    $city = $params['clientdetails']['city'];
+    $state = $params['clientdetails']['state'];
+    $postcode = $params['clientdetails']['postcode'];
+    $country = $params['clientdetails']['country'];
+    $phone = $params['clientdetails']['phonenumber'];
+    # System Variables
+    $companyname = $params['companyname'];
+    #$systemurl = $params['systemurl'] . "client/";
+    $params['systemurl'] = $params['systemurl'];
+    //$basecurrency = $params['basecurrency'];
+    $total=$amount;
+    
+    
+    
+
+//$total=100;
+    $results = array();
+if ($gatewaytestmode == "on") 
+{
+    if($gatewaychargemode == "on")
+    {
+    $url ='https://sandbox.sslcommerz.com/gwprocess/v3/api_convenient_fee.php';
+    }
+    else
+    {
+        $url ='https://sandbox.sslcommerz.com/gwprocess/v4/api.php';
+    }
+}
+else
+{
+    if($gatewaychargemode == "on")
+        {
+        $url ='https://securepay.sslcommerz.com/gwprocess/v3/api_convenient_fee.php';
+    }
+    else
+    {
+        $url ='https://securepay.sslcommerz.com/gwprocess/v4/api.php';
+    }
+}
+
+
+
+
+$success_url=$params['systemurl'].'modules/gateways/callback/mlhSSL.php';
+$fail_url=$params['systemurl'].'modules/gateways/callback/mlhSSL.php';
+$cancel_url=$params['systemurl'].'modules/gateways/callback/mlhSSL.php';
+    # Enter your code submit to the gateway...
+        $post_data = json_encode($params);
+        // $json_d = '{ status: "success", data: "https://epay.sslcommerz.com/2ccb2a584a1c9cd297e95e7d37da17eb7a8df356", logo: "https://securepay.sslcommerz.com/stores/logos/logo_SCZ100_2727.png?v=5e1ab8c2671cb" }';
+        // 
+        // 
+    
+
+    // single getway find (start)
+// 
+    $post_data = array();
+ $post_data['store_id'] = $gatewaystore_id;
+ $post_data['store_passwd'] = $gatewaystore_password;
+$direct_api_url = $url;
+$post_data['total_amount'] = $total;
+$post_data['currency'] = $currency;
+$post_data['tran_id'] = $invoiceid;
+$post_data['success_url'] = $success_url;
+$post_data['fail_url'] = $fail_url;
+$post_data['cancel_url'] = $cancel_url;
+$post_data['cus_name'] = $firstname.' '.$lastname;
+$post_data['cus_email'] = $email;
+$post_data['cus_phone'] = $phone;
+$post_data['cus_add1'] = $address1;
+$post_data['cus_add2'] = $address2;
+$post_data['cus_city'] = $city;
+$post_data['cus_state'] = $state;
+$post_data['cus_postcode'] = $postcode;
+$post_data['cus_country'] = $country;
+//$post_data['multi_card_name'] = "bkash";
+$post_data['value_b'] = $total;
+$handle = curl_init();
+curl_setopt($handle, CURLOPT_URL, $direct_api_url );
+curl_setopt($handle, CURLOPT_TIMEOUT, 30);
+curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 30);
+curl_setopt($handle, CURLOPT_POST, 1 );
+curl_setopt($handle, CURLOPT_POSTFIELDS, $post_data);
+curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, FALSE); # KEEP IT FALSE IF YOU RUN FROM LOCAL PC
+$content = curl_exec($handle );
+$code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+if($code == 200 && !( curl_errno($handle))) {
+  curl_close( $handle);
+  $sslcommerzResponse = $content;
+} else {
+  curl_close( $handle);
+  echo "FAILED TO CONNECT WITH SSLCOMMERZ API";
+  exit;
+}
+# PARSE THE JSON RESPONSE
+$sslcz = json_decode($sslcommerzResponse, true );
+// echo "<pre>";
+// print_r($sslcz);exit;
+// 
+$sslcz_gw = $sslcz['gw'];
+$sslcz_desc = $sslcz['desc'];
+
+// echo "<pre>";
+// print_r($sslcz_gw);
+
+// echo "<pre>";
+// print_r($sslcz_desc);
+
+    
+    $code = "<style type='text/css'>
+        .active{ display:block !important; }
+
+        .hide{display:none;}
+
+        #hrow{display:none;}
+
+        .getway_button {
+            
+            background:#ef4949;
+            color:#fff;
+            border-radius: 0px;
+            box-shadow: 0px 0px #cdd3d9;
+            padding: 7px 11px;
+            font-size: 15px;
+        }
+
+        .hvr-pop {
        backface-visibility: hidden;
 box-shadow: 0 0 1px;
 rgba(0, 0, 0, 0);
@@ -21,5 +176,180 @@ margin-right: 5px;
         transform: scale(1.2);
     }
 }
-<a href="https://securepay.sslcommerz.com/gwprocess/v4/gw.php?Q=REDIRECT&amp;SESSIONKEY=F5E2DB55A9BCF6069AC97A5075827F29&amp;cardname=dbblmobilebanking" target="_blank" class="hvr-pop">
-                        <img src="https://securepay.sslcommerz.com/gwprocess/v4/image/gw/dbblmobilebank.png" style="width:50px;"> </a>
+
+
+        .getway_div{list-style:none; margin:0; padding:0;}
+    </style> ";
+
+
+ $card_counter = 0; 
+    foreach ($sslcz_gw as $type => $gateway) 
+    {
+        $gateway_ext_check = explode(',',$gateway);
+        if(count($gateway_ext_check) > 1)
+        {
+            if(strtolower($type) == 'visa' OR strtolower($type) == 'master' OR strtolower($type) == 'amex' OR strtolower($type) == 'othercards' )
+            {
+               
+                if($card_counter === 0)
+                {
+                    $code .= '<button class="your-button-class btn_getw_type getway_button" class="cards" data-btnname="cards" style="margin-bottom:4px;">
+                    CARDS
+                     </button> ';
+                     $card_counter++;
+                }
+                
+            }
+            else{
+                 $code .= '<button class="your-button-class btn_getw_type getway_button" class="'.strtolower($type).'" data-btnName="'.strtolower($type).'" style="margin-bottom:4px;">
+                     '. strtoupper($type).'
+                       </button> ';
+            }
+
+       
+
+        }
+
+    }   
+
+
+$code .="<hr id='hrow'>";
+
+// Array
+// (
+//     [visa] => dbbl_visa,brac_visa,visacard
+//     [master] => dbbl_master,brac_master,mastercard
+//     [amex] => 
+//     [othercards] => dbbl_nexus,dbbl_onus_visa,dbbl_onus_master
+//     [internetbanking] => city,bankasia,ibbl,mtbl,abdirect,tapnpay,ipay
+//     [mobilebanking] => dbblmobilebanking,bkash,abbank,m_ibbl,mycash,mobilemoney,okwallet,surecash,dmoney
+// )
+
+ $code .= "<div class='getway_div'>";
+    foreach ($sslcz_gw as $type => $gateway) 
+    {
+        
+        
+         $sslcz_getway_exp = explode(',',$gateway);
+
+         if(strtolower($type) == 'visa' OR strtolower($type) == 'master' OR strtolower($type) == 'amex' OR strtolower($type) == 'othercards' )
+         {
+
+            // $code .= '<span class="getway_cards hide"  > ';
+
+            foreach ($sslcz_getway_exp as $sslcz_getway_exp_value) 
+            {
+            //sslcz_getway_exp_value:
+            // dbbl_visa
+            // brac_visa
+            // visacard
+              $code .= '<span class="getway_cards hide " style="width:54px; float:left;"  > ';
+                foreach ($sslcz_desc as $sslcz_desc_key => $sslcz_desc_value)
+                {
+                    if($type == $sslcz_desc_value['type'] AND $sslcz_getway_exp_value == $sslcz_desc_value['gw'] )
+                    {
+
+                        $code .= '<a class="hvr-pop" href="'.$sslcz_desc_value['redirectGatewayURL'].'"  target="_blank" >
+                        <img src="'.$sslcz_desc_value['logo'].'" style="width:50px;"> </a>';
+
+
+                    }
+                }
+                $code .= '</span>';
+
+
+            }
+
+
+
+            // $code .= '</span>';
+
+         }
+         else
+         {
+
+             // $code .= '<span class="getway_'.strtolower($type).' hide" style="width:40px;" > ';
+
+            foreach ($sslcz_getway_exp as $sslcz_getway_exp_value) 
+            {
+            //sslcz_getway_exp_value:
+            // dbbl_visa
+            // brac_visa
+            // visacard
+                $code .= '<span class="getway_'.strtolower($type).' hide " style="width:54px; float:left; margin-top:5px; " > ';
+                foreach ($sslcz_desc as $sslcz_desc_key => $sslcz_desc_value)
+                {
+                    if($type == $sslcz_desc_value['type'] AND $sslcz_getway_exp_value == $sslcz_desc_value['gw'] )
+                    {
+
+                        $code .= '<a class="hvr-pop" href="'.$sslcz_desc_value['redirectGatewayURL'].'" target="_blank" >
+                        <img src="'.$sslcz_desc_value['logo'].'" style="width:50px;"> </a>';
+
+
+                    }
+                }
+                $code .= '</span>';
+
+
+
+            }
+
+
+
+             // $code .= '</span>';
+
+         }
+
+        
+
+        
+
+    }
+
+    $code .="</div>";
+
+    $code .= '
+    
+
+        <!-- <button class="your-button-class" id="sslczPayBtn"
+        postdata=""
+        order="'.$invoiceid.'"
+        endpoint="https://www.mylighthost.com/manager/modules/gateways/mlhSSL/endpoint.php"> Pay SSL NOW
+         </button> -->
+    
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+
+ 
+    $(document).ready(function(){
+        $(document).on("click",".btn_getw_type",function(e){
+            
+            var btnname = $(this).data("btnname");
+            
+            $(".getway_button").each(function(){
+                $(this).css({"background":"#ef4949","color":"#fff"});
+                });
+                
+            $(this).css({"background":"#f6f6f6","color":"#000"});
+
+             $("#hrow").addClass("active");
+
+             $(".getway_div").find(".active").removeClass("active");
+
+             $(".getway_"+btnname).addClass("active");
+                
+                console.log(btnname);
+            
+        });
+    });
+
+    
+            
+</script>
+';
+return $code;
+}
+?>
