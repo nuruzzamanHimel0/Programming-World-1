@@ -1,0 +1,12 @@
+Given, say, 1.25 - how do I get "1" and ."25" parts of this number?
+
+I need to check if the decimal part is .0, .25, .5, or .75.
+
+ANs: 
+RULE: 
+
+$x = $x - floor($x)
+ex:
+$n = 1.25;
+$whole = floor($n);      // 1
+$fraction = $n - $whole; // .25
