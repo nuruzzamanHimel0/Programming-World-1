@@ -1,0 +1,26 @@
+HTML:
+<div class="pricebox assembly-pricebox">
+												<sup>$</sup>1656<sup>01</sup><sub>/yr.</sub>
+											</div>
+
+css: 
+
+.pricebox {
+	color: #fff;
+	font-family: adelle;
+	font-size: 50px;
+	font-weight: 400;
+	margin: 30px auto 26px;
+	padding: 0;
+	margin-bottom: 0px !important;
+}
+
+.pricebox sup {
+	font-size: 28px;
+	margin: -10px 0 0 5px;
+}
+
+.pricebox sub {
+	font-size: 20px;
+	margin: 0 0 0 -32px;
+}
