@@ -1,0 +1,17 @@
+.centereddiv{
+background-color: #000;
+position: absolute;
+width: 650px;
+height: 100px;
+top: 50%;
+left: 50%;
+-webkit-transform: translate(-50%, -50%);
+-moz-transform: translate(-50%, -50%);
+-o-transform: translate(-50%, -50%);
+-ms-transform: translate(-50%, -50%);
+transform: translate(-50%, -50%);
+}
+
+............................................\
+
+URL: https://www.youtube.com/watch?v=KJFWsggjUcE&list=PLDyxslmFnGvhatdJ_vL-3j8TosjEAizoi&index=2&t=9s
