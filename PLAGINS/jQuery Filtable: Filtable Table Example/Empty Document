@@ -1,0 +1,194 @@
+url: 
+
+https://www.jqueryscript.net/demo/filter-form-Controls-filtable/
+
+https://www.jqueryscript.net/table/filter-form-Controls-filtable.html
+
+.................. ############################################################################
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="js/filtable.js?dev"></script>
+
+<style type="text/css">
+	table tr:nth-child(even) > td,
+table tr.even > td {
+  background-color: #fff;
+}
+table tr:nth-child(odd) > td,
+table tr.odd > td {
+  background-color: #fff;
+}
+
+table tr.hidden {
+  display: none;
+}
+
+</style>
+
+<div class="table-filters">
+  <label for="filter-country">Name:</label>
+  <input type="text" class="input-text" id="filter-name" data-filter-col="0,1">
+
+  <label for="filter-city">City:</label>
+  <select id="filter-city" data-filter-col="2" style="min-width:60px">
+    <option value="">- All -</option>
+    <option value="j">J</option>
+    <option value="k">K</option>
+    <option value="ll">LL</option>
+  </select>
+
+
+  <label for="filter-country">Country:</label>
+  <input type="text" class="input-text" id="filter-country" data-filter-col="3">
+
+
+  <label for="filter-tick">
+    <input type="checkbox" id="filter-tick" data-filter-col="0,1,2,3" data-filter-val="B"> B</label>
+</div>
+
+
+<table id="data">
+<thead>
+	<tr>
+		<th>First name</th>
+		<th>Last name</th>
+		<th>City</th>
+		<th>Country</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>Shoshana</td>
+		<td class="name">Wooten</td>
+		<td>Valdosta</td>
+		<td>United Kingdom</td>
+	</tr>
+	<tr>
+		<td>Stewart</td>
+		<td class="name">Dillard</td>
+		<td>South Portland</td>
+		<td>Italy</td>
+	</tr>
+	<tr>
+		<td>Tana</td>
+		<td class="name">Villarreal</td>
+		<td>Waltham</td>
+		<td>Solomon Islands</td>
+	</tr>
+	<tr>
+		<td>Wendy</td>
+		<td class="name">Greer</td>
+		<td>Bellflower</td>
+		<td>Mauritania</td>
+	</tr>
+	<tr>
+		<td>Kenneth</td>
+		<td class="name">Livingston</td>
+		<td>Anaheim</td>
+		<td>Honduras</td>
+	</tr>
+	<tr>
+		<td>Holly</td>
+		<td class="name">Strong</td>
+		<td>Placentia</td>
+		<td>Greenland</td>
+	</tr>
+	<tr>
+		<td>Lynn</td>
+		<td class="name">Cooley</td>
+		<td>Temecula</td>
+		<td>Papua New Guinea</td>
+	</tr>
+	<tr>
+		<td>Autumn</td>
+		<td class="name">Barry</td>
+		<td>Malden</td>
+		<td>Serbia and Montenegro</td>
+	</tr>
+	<tr>
+		<td>Hadassah</td>
+		<td class="name">Berry</td>
+		<td>Ketchikan</td>
+		<td>Egypt</td>
+	</tr>
+	<tr>
+		<td>Hector</td>
+		<td class="name">Burns</td>
+		<td>Kokomo</td>
+		<td>Monaco</td>
+	</tr>
+	<tr>
+		<td>Eagan</td>
+		<td class="name">Carr</td>
+		<td>Jeannette</td>
+		<td>Slovakia</td>
+	</tr>
+	<tr>
+		<td>Charissa</td>
+		<td class="name">Barker</td>
+		<td>Meadville</td>
+		<td>New Zealand</td>
+	</tr>
+	<tr>
+		<td>Abigail</td>
+		<td class="name">Holman</td>
+		<td>Dubuque</td>
+		<td>Kiribati</td>
+	</tr>
+	<tr>
+		<td>Caesar</td>
+		<td class="name">Carver</td>
+		<td>Jordan Valley</td>
+		<td>Mexico</td>
+	</tr>
+	<tr>
+		<td>Barbara</td>
+		<td class="name">Shields</td>
+		<td>Saint Joseph</td>
+		<td>Germany</td>
+	</tr>
+	<tr>
+		<td>Rose</td>
+		<td class="name">Pace</td>
+		<td>Moraga</td>
+		<td>Ecuador</td>
+	</tr>
+	<tr>
+		<td>Nero</td>
+		<td class="name">William</td>
+		<td>Hutchinson</td>
+		<td>Serbia and Montenegro</td>
+	</tr>
+	<tr>
+		<td>Thor</td>
+		<td class="name">Kelly</td>
+		<td>Jeffersonville</td>
+		<td>Liberia</td>
+	</tr>
+	<tr>
+		<td>Edward</td>
+		<td class="name">Barron</td>
+		<td>Mandan</td>
+		<td>Paraguay</td>
+	</tr>
+	<tr>
+		<td>Mohammad</td>
+		<td class="name">Mcfadden</td>
+		<td>Cicero</td>
+		<td>Bolivia</td>
+	</tr>
+</tbody>
+</table>
+
+
+<script type="text/javascript">
+	$(function(){
+  $('#data').filtable({ 
+    controlPanel: $('.table-filters')
+  });
+});
+
+
+
+</script>
