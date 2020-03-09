@@ -1,0 +1,35 @@
+ <div class="navbar-collapse collapse">
+ <ul class="nav navbar-nav pull-right" id="nav">
+ <li class="active"><a href="#" >Home</a></li>
+ <li><a href="#gallery">About</a></li>
+ <li class="dropdown">
+ <a href="#" class="dropdown-toggle" data-toggle="dropdown">Offerings <b class=" caret"> 
+ </b> </a>
+ <ul class="dropdown-menu">
+ <li ><a href="#" id="home">Diamonds</a></li>
+ <li><a href="#">Emralds</a></li>
+ <li><a href="#">EarthStones</a></li>
+ <li><a href="#">Natural stones</a></li>
+ </ul>
+ <li><a href="#process" id="team">Team</a></li>
+ <li><a href="#contactus">Contact</a></li>
+ </ul>
+ </div>
+ </div>
+ </div>
+
+........................... 
+##########################################
+
+
+
+<script>
+$(document).ready(function() { 
+  $(".nav li").click(function(event) { 
+    
+      $(".nav li ").removeClass("active"); //Remove any "active" class 
+      $("li", this).addClass("active"); //Add "active" class to selected tab // 
+      // $(activeTab).show(); //Fade in the active content 
+ });
+});
+</script>
