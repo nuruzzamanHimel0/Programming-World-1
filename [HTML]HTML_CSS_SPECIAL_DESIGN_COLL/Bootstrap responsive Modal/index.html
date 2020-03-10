@@ -1,0 +1,672 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="apple-touch-icon" type="image/png" href="https://static.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
+    <meta name="apple-mobile-web-app-title" content="CodePen">
+    <link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+    <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+    <title>CodePen - Simple Responsive Modal Bootstrap Effects</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: 'Oswald';
+            margin: auto 10px;
+            letter-spacing: 3px;
+            float: left;
+            background-color: #2b2b2b !important;
+        }
+        
+        button a {
+            letter-spacing: 2px;
+        }
+        
+        h1,
+        h2,
+        h3,
+        p {
+            font-family: 'Oswald';
+            color: #fff;
+        }
+        
+        span {
+            color: #4fe;
+        }
+        
+        h2 {
+            letter-spacing: -2px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-weight: 200;
+            color: #fb4;
+            font-size: 19px;
+        }
+        
+        .button-- {
+            float: left;
+            position: relative;
+            padding: 0;
+        }
+        
+        .modal-content {
+            position: relative;
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            border: 1px solid #999;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: 0;
+            outline: 0;
+            -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+            box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+        }
+        
+        .btn {
+            border-radius: 0px !important;
+        }
+        
+        #myModal--effect-zoomIn.modal.fade .modal-dialog {
+            -webkit-transform: scale(0.1);
+            -moz-transform: scale(0.1);
+            -ms-transform: scale(0.1);
+            transform: scale(0.1);
+            top: 120px;
+            opacity: 0;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+        
+        #myModal--effect-zoomIn.modal.fade.in .modal-dialog {
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            -webkit-transform: translate3d(0, -120px, 0);
+            transform: translate3d(0, -120px, 0);
+            opacity: 1;
+        }
+        
+        #myModal--effect-pulse.modal.fade .modal-dialog {
+            transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
+            opacity: 0;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+        
+        #myModal--effect-pulse.modal.fade.in .modal-dialog {
+            transform: perspective(400px) scale3d(.95, .95, .95);
+            animation-timing-function: ease-in;
+            opacity: 1;
+        }
+        
+        #myModal--slideLeft.modal.fade .modal-dialog {
+            opacity: 0;
+            transform: translate3d(-100%, 0, 0);
+            visibility: visible;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+        
+        #myModal--slideLeft.modal.fade.in .modal-dialog {
+            transform: scale3d(1, 1, 1) translate3d(0, 0px, 0);
+            opacity: 1;
+        }
+        
+        #myModal--slideSpeedRight.modal.fade .modal-dialog {
+            transform: translate3d(100%, 0, 0) skewX(-30deg);
+            opacity: 0;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+        
+        #myModal--slideSpeedRight.modal.fade.in .modal-dialog {
+            animation: slideSpeedRight ease-out 0.5s;
+            animation-iteration-count: 1;
+            transform-origin: 50% 50%;
+            animation-fill-mode: forwards;
+            /*when the spec is finished*/
+            -webkit-animation: slideSpeedRight ease-out 0.5s;
+            -webkit-animation-iteration-count: 1;
+            -webkit-transform-origin: 50% 50%;
+            -webkit-animation-fill-mode: forwards;
+            /*Chrome 16+, Safari 4+*/
+            -moz-animation: slideSpeedRight ease-out 0.5s;
+            -moz-animation-iteration-count: 1;
+            -moz-transform-origin: 50% 50%;
+            -moz-animation-fill-mode: forwards;
+            /*FF 5+*/
+            -o-animation: slideSpeedRight ease-out 0.5s;
+            -o-animation-iteration-count: 1;
+            -o-transform-origin: 50% 50%;
+            -o-animation-fill-mode: forwards;
+            /*Not implemented yet*/
+            -ms-animation: slideSpeedRight ease-out 0.5s;
+            -ms-animation-iteration-count: 1;
+            -ms-transform-origin: 50% 50%;
+            -ms-animation-fill-mode: forwards;
+            /*IE 10+*/
+        }
+        
+        @keyframes slideSpeedRight {
+            0% {
+                opacity: 0;
+                transform: translate(300px, 0px) skewX(-30deg);
+            }
+            60% {
+                opacity: 1;
+                transform: translate(-40px, 0px) skewX(30deg);
+            }
+            80% {
+                opacity: 1;
+                transform: translate(0px, 0px) skewX(-15deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0px, 0px) skewX(0deg);
+            }
+        }
+        
+        @-moz-keyframes slideSpeedRight {
+            0% {
+                opacity: 0;
+                -moz-transform: translate(300px, 0px) skewX(-30deg);
+            }
+            60% {
+                opacity: 1;
+                -moz-transform: translate(-40px, 0px) skewX(30deg);
+            }
+            80% {
+                opacity: 1;
+                -moz-transform: translate(0px, 0px) skewX(-15deg);
+            }
+            100% {
+                opacity: 1;
+                -moz-transform: translate(0px, 0px) skewX(0deg);
+            }
+        }
+        
+        @-webkit-keyframes slideSpeedRight {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate(300px, 0px) skewX(-30deg);
+            }
+            60% {
+                opacity: 1;
+                -webkit-transform: translate(-40px, 0px) skewX(30deg);
+            }
+            80% {
+                opacity: 1;
+                -webkit-transform: translate(0px, 0px) skewX(-15deg);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate(0px, 0px) skewX(0deg);
+            }
+        }
+        
+        @-o-keyframes slideSpeedRight {
+            0% {
+                opacity: 0;
+                -o-transform: translate(300px, 0px) skewX(-30deg);
+            }
+            60% {
+                opacity: 1;
+                -o-transform: translate(-40px, 0px) skewX(30deg);
+            }
+            80% {
+                opacity: 1;
+                -o-transform: translate(0px, 0px) skewX(-15deg);
+            }
+            100% {
+                opacity: 1;
+                -o-transform: translate(0px, 0px) skewX(0deg);
+            }
+        }
+        
+        @-ms-keyframes slideSpeedRight {
+            0% {
+                opacity: 0;
+                -ms-transform: translate(300px, 0px) skewX(-30deg);
+            }
+            60% {
+                opacity: 1;
+                -ms-transform: translate(-40px, 0px) skewX(30deg);
+            }
+            80% {
+                opacity: 1;
+                -ms-transform: translate(0px, 0px) skewX(-15deg);
+            }
+            100% {
+                opacity: 1;
+                -ms-transform: translate(0px, 0px) skewX(0deg);
+            }
+        }
+        
+        #myModal--specialRotateX.modal.fade .modal-dialog {
+            transform: skewX(18deg);
+            transform: skewX(-6deg);
+            animation: specialRotateX linear 0.4s;
+            animation-iteration-count: 1;
+            transform-origin: 50% 50%;
+            -webkit-animation: specialRotateX linear 0.4s;
+            -webkit-animation-iteration-count: 1;
+            -webkit-transform-origin: 50% 50%;
+            -moz-animation: specialRotateX linear 0.4s;
+            -moz-animation-iteration-count: 1;
+            -moz-transform-origin: 50% 50%;
+            -o-animation: specialRotateX linear 0.4s;
+            -o-animation-iteration-count: 1;
+            -o-transform-origin: 50% 50%;
+            -ms-animation: specialRotateX linear 0.4s;
+            -ms-animation-iteration-count: 1;
+            -ms-transform-origin: 50% 50%;
+        }
+        
+        @keyframes specialRotateX {
+            0% {
+                transform: translate(-22px, -172px) rotate(-21deg);
+            }
+            100% {
+                transform: translate(-19px, -29px) rotate(360deg);
+            }
+        }
+        
+        @-moz-keyframes specialRotateX {
+            0% {
+                -moz-transform: translate(-22px, -172px) rotate(-21deg);
+            }
+            100% {
+                -moz-transform: translate(-19px, -29px) rotate(360deg);
+            }
+        }
+        
+        @-webkit-keyframes specialRotateX {
+            0% {
+                -webkit-transform: translate(-22px, -172px) rotate(-21deg);
+            }
+            100% {
+                -webkit-transform: translate(-19px, -29px) rotate(360deg);
+            }
+        }
+        
+        @-o-keyframes specialRotateX {
+            0% {
+                -o-transform: translate(-22px, -172px) rotate(-21deg);
+            }
+            100% {
+                -o-transform: translate(-19px, -29px) rotate(360deg);
+            }
+        }
+        
+        @-ms-keyframes specialRotateX {
+            0% {
+                -ms-transform: translate(-22px, -172px) rotate(-21deg);
+            }
+            100% {
+                -ms-transform: translate(-19px, -29px) rotate(360deg);
+            }
+        }
+        
+        #myModal--specialPromo.modal.fade .modal-dialog {
+            -webkit-animation: specialPromo 1s 1 ease-in-out;
+            -moz-animation: specialPromo 1s 1 ease-in-out;
+            -o-animation: specialPromo 1s 1 ease-in-out;
+        }
+        
+        #myModal--slideSpeedRight.modal.fade.in .modal-dialog {
+            -webkit-transform: rotate(360deg) scale(1) skew(1deg) translate(0px);
+            -moz-transform: rotate(360deg) scale(1) skew(1deg) translate(0px);
+            -o-transform: rotate(360deg) scale(1) skew(1deg) translate(0px);
+        }
+        
+        @-webkit-keyframes specialPromo {
+            from {
+                -webkit-transform: rotate(172deg) scale(0.46) skew(1deg) translate(0px);
+            }
+            to {
+                -webkit-transform: rotate(360deg) scale(1) skew(1deg) translate(0px);
+            }
+        }
+        
+        @-moz-keyframes specialPromo {
+            from {
+                -moz-transform: rotate(172deg) scale(0.46) skew(1deg) translate(0px);
+            }
+            to {
+                -moz-transform: rotate(360deg) scale(1) skew(1deg) translate(0px);
+            }
+        }
+        
+        @-o-keyframes specialPromo {
+            from {
+                -o-transform: rotate(172deg) scale(0.46) skew(1deg) translate(0px);
+            }
+            to {
+                -o-transform: rotate(360deg) scale(1) skew(1deg) translate(0px);
+            }
+        }
+        
+        #myModal--effect-zoomOutIn.modal.fade .modal-dialog {
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            transform: scale(1.1);
+            top: 120px;
+            opacity: 0;
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+        
+        #myModal--effect-zoomOutIn.modal.fade.in .modal-dialog {
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            -webkit-transform: translate3d(0, -120px, 0);
+            transform: translate3d(0, -120px, 0);
+            opacity: 1;
+        }
+        
+        #myModal--effect-niceZoomIn.modal.fade .modal-dialog {
+            top: 100px;
+            -moz-transform: scale(1) rotate(0deg) translateX(2px) translateY(20px);
+            -webkit-transform: scale(1) rotate(0deg) translateX(2px) translateY(20px);
+            -o-transform: scale(1) rotate(0deg) translateX(2px) translateY(20px);
+            -ms-transform: scale(1) rotate(0deg) translateX(2px) translateY(20px);
+            transform: scale(1) rotate(0deg) translateX(2px) translateY(20px);
+        }
+        
+        #myModal--effect-niceZoomIn.modal.fade.in .modal-dialog {
+            -moz-transform: scale(1.1) rotate(12deg) translateX(2px) translateY(20px);
+            -webkit-transform: scale(1.1) rotate(12deg) translateX(2px) translateY(20px);
+            -o-transform: scale(1.1) rotate(12deg) translateX(2px) translateY(20px);
+            -ms-transform: scale(1.1) rotate(12deg) translateX(2px) translateY(20px);
+            transform: scale(1.1) rotate(12deg) translateX(2px) translateY(20px);
+            opacity: 1;
+        }
+        
+        #myModal--effect-fullwidth.modal.fade .modal-dialog {
+            -moz-transform: scale(0.3);
+            -webkit-transform: scale(0.3);
+            -o-transform: scale(0.3);
+            -ms-transform: scale(0.3);
+            transform: scale(0.3);
+            opacity: 1;
+        }
+        
+        .modal-dialog.fullwidth--box {
+            width: 90%;
+            margin: 0 auto;
+            left: 5px;
+        }
+        
+        .modal-content.no--shadow {
+            border: 0;
+            box-shadow: none !important;
+            /* width: 100%; */
+        }
+        
+        #myModal--effect-fullwidth.modal.fade.in .modal-dialog {
+            -moz-transform: scale(1);
+            -webkit-transform: scale(1);
+            -o-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        div#myModal--effect-fullwidth {
+            background: rgba(255, 255, 255, 1);
+        }
+    </style>
+    <script>
+        window.console = window.console || function(t) {};
+    </script>
+    <script>
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+    </script>
+</head>
+
+<body translate="no" style="" class="">
+
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet" type="text/css">
+
+    <section class="content col-md-12">
+        <div class="row">
+            <div class="col-md-12  button--">
+                <h1>
+Simple Responsive Modal Effects</h1>
+                <h2> <span>BootStrap</span>&amp; PURE <span>CSS</span></h2>
+                <p>In progress ..... come back for more later! (=) </p>
+                <h3>by: @hughbalboa</h3>
+            </div>
+        </div>
+    </section>
+
+    <div class="col-md-12  button--">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">DEFAULT EFFECT</button>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/IMG_3497.JPG" alt="" width="100%">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12  button--">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal--effect-zoomIn"> EFFECT ZOOMIN</button>
+    </div>
+
+    <div class="modal fade" id="myModal--effect-zoomIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/IMG_3497.JPG" alt="" width="100%">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12  button--">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal--effect-pulse"> EFFECT PULSE</button>
+    </div>
+
+    <div class="modal fade  " id="myModal--effect-pulse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/16.jpg" alt="" width="100%">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12  button--">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal--slideLeft"> EFFECT SLIDE LEFT</button>
+    </div>
+    <div class="modal fade  " id="myModal--slideLeft" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/2.jpg" alt="" width="100%">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12  button--">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal--slideSpeedRight"> EFFECT SLIDE SPEED FROM RIGHT</button>
+    </div>
+    <div class="modal fade  " id="myModal--slideSpeedRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/4.jpg" alt="" width="100%">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12  button--">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal--specialRotateX"> EFFECT SLIDE SPECIAL ROTATE</button>
+    </div>
+    <div class="modal fade  " id="myModal--specialRotateX" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/4.jpg" alt="" width="100%">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12  button--">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal--specialPromo"> EFFECT SLIDE SPECIAL PROMO</button>
+    </div>
+    <div class="modal fade  " id="myModal--specialPromo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/8.jpg" alt="" width="100%">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12  button--">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal--effect-zoomOutIn"> EFFECT SLIDE ZOOMOUT</button>
+    </div>
+    <div class="modal fade  " id="myModal--effect-zoomOutIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/8.jpg" alt="" width="100%">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12  button--">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal--effect-niceZoomIn"> EFFECT NICE ZOOM IN</button>
+    </div>
+    <div class="modal fade  " id="myModal--effect-niceZoomIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/8.jpg" alt="" width="100%">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12  button--">
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal--effect-fullwidth"> EFFECT FULLWIDTH</button>
+    </div>
+    <div class="modal fade fullwidth  " id="myModal--effect-fullwidth" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog fullwidth--box " role="document">
+            <div class="modal-content no--shadow">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/172203/8.jpg" alt="" width="100%">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
