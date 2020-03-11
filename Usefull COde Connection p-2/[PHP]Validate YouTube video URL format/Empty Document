@@ -1,0 +1,27 @@
+URL : https://www.codespeedy.com/validate-youtube-video-url-in-php-using-parse_url-function/
+...............................................
+    <?php
+       $yt_url = "https://www.youtube.com/watch?v=cCO2tPGa-dM";
+       $url_parsed_arr = parse_url($yt_url);
+    ?>
+
+OUTPUT: 
+Array
+(
+    [scheme] => https
+    [host] => www.youtube.com
+    [path] => /watch
+    [query] => v=cCO2tPGa-dM&t=49s
+)
+
+.......................................
+
+    <?php
+       $yt_url = "https://www.youtube.com/watch?v=cCO2tPGa-dM";
+       $url_parsed_arr = parse_url($yt_url);
+       if ($url_parsed_arr['host'] == "www.youtube.com" && $url_parsed_arr['path'] == "/watch" && substr($url_parsed_arr['query'], 0, 2) == "v=" && substr($url_parsed_arr['query'], 2) != "") {
+            echo "The URL is a valid YouTube link";
+       } else {
+           echo "Not a valid YouTube link";
+       }
+    ?>

@@ -1,0 +1,24 @@
+<div class="col-md-12 marquee">
+	<span style="animation: marquee <?php echo $settings_caption['speed']; ?>s linear infinite;"><?php echo $settings_caption['text']; ?></span>
+</div>
+
+............................
+
+.marquee {
+	/* margin: 0 auto; */
+	white-space: nowrap;
+	/* overflow: hidden; */
+	border: 2px #ccc solid;
+	Background-color: #00a651;
+	position: relative;
+	font: 16px 'Segoe UI', Tahoma, Helvetica, Sans-Serif;
+	border-radius: 10px;
+}
+
+.marquee span {
+	display: inline-block;
+	padding-left: 100%;
+	text-indent: 0;
+	font-weight: 600;
+	color: #f7f7f7;
+}
